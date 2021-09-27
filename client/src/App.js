@@ -33,8 +33,8 @@ function App() {
       }
     })
   }
-  // console.log(user)
-  // if(!user) return <Login setUser={setUser}/> 
+  console.log(user)
+  if(!user) return <Login setUser={setUser}/> 
 
   return (
     <div>
