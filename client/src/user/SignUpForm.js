@@ -1,8 +1,10 @@
 import  {useState, useEffect} from 'react'
-import MoneyApp from "./MoneyApp"
+// import MoneyApp from "./MoneyApp"
 import { useHistory } from "react-router-dom"
+import styled from "styled-components";
 
-function SignUpForm() {
+
+function SignUpForm({setUser}) {
     const [ username, setUsername ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ passwordConfirmation, setPasswordConfirmation ] = useState('')
@@ -19,17 +21,18 @@ function SignUpForm() {
         const user = {
             username: username,
             password: password,
-            password_confirmation: passwordConfirmation,
+           
             
     }
     fetch('/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(user)
+        body: JSON.stringify (user)
     })
+    
     .then(res => {
         if (res.ok) {
-            res.json().then(user => setUsername(user))
+            res.json().then(user => setUser(user)) 
             } else {
                 res.json().then(err => setErrors(err.errors))
             }

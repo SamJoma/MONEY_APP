@@ -1,0 +1,2 @@
+class CategoryBudgetsController < ApplicationController
+end

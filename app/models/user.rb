@@ -1,7 +1,8 @@
 class User < ApplicationRecord
     has_secure_password
-    has_many :monthly_budgets, dependent: :destroy
     has_many :expenses, dependent: :destroy
+    has_many :monthly_budgets, through: :expenses
+    has_many :categories, through: :expenses    
     validates :username, uniqueness: { case_sensitive: false }
   
     def addMonths

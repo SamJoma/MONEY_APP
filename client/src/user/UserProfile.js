@@ -49,14 +49,14 @@ function UserProfile({ user, setUser }){
         <h1>Welcome, {user.username}!</h1>
         <div className='profile-info'>
           <p>
-            Account Name: {this.props.userInfo.username}
+            Account Name: {user.username}
           </p>
           <input
           onChange={(e)=>this.handleChange(e)}
           placeholder='Update Username'
-          value={this.state.username}/>
+          value={user.username}/>
           <button> Update Username </button>
-          <button onClick={()=>this.handleDelete()}> Delete Account </button>
+          <button onClick={handleDelete}> Delete Account </button>
         </div>
       </div>
     )
