@@ -1,2 +1,3 @@
 class MonthlyBudgetsController < ApplicationController
+   
 end

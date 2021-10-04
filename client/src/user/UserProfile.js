@@ -1,18 +1,18 @@
 
 import React, { useState, Component } from 'react';
 import {withRouter} from 'react-router-dom';
-
+import {useHistory} from 'react-router-dom'
 
 function UserProfile({ user, setUser }){
     const [ open, setOpen ] = useState(false)
     const [ editName, setEditName ] = useState(user.username)
     const [ errors, setErrors ] = useState([])
-    
+    const history = useHistory()
 
  function handleEditProfile(e) {
      e.preventDefault()
      const profObj ={
-         username:editName
+         username:editName 
      }
      fetch ('/editprofile', {
          method:'PATCH',
@@ -35,10 +35,10 @@ function UserProfile({ user, setUser }){
   function handleDelete() {
     let resp = window.confirm("Are you sure you would like to delete your account?");
     if (resp === true) {
-      fetch(`http://localhost:3000/${user.id}`,
+      fetch(`/users/${user.id}`,
        {method: 'DELETE'})
       alert('User has been deleted');
-      this.props.history.push('/login');
+      history.push('/login');
     }
   }
 

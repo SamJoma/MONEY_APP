@@ -7,6 +7,28 @@ class UsersController < ApplicationController
         render json: user, status: :created
     end
 
+    def destroy
+        user = User.find_by(id:params[:id])
+        user.destroy
+        head :no_content
+    end
+
+    def profile
+        render json: { user: UserSerializer.new(current_user) }, status: :accepted
+      end
+
+      def update
+        user = User.find_by(id: params[:id])
+    
+        if user
+          user.update(user_params)
+          render json: {message: "Update Sucessful", user: @user}, status: :ok
+        else
+          render json: { error: 'Invalid request' }, status: :unauthorized
+        end
+      end
+    
+
 # '/signup'
     def create 
         user = User.create(user_params) 
@@ -16,12 +38,6 @@ class UsersController < ApplicationController
             else  
                 render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
         end
-    end
-
-    def update 
-        user = User.find_by(id:session[:user_id])
-        user.update!(user_params)
-        render json: user, status: accepted 
     end
 
 
@@ -35,16 +51,18 @@ class UsersController < ApplicationController
         params.permit(:username, :password, :password_confirmation)
     end
 
+   
     def scraper 
-        url = "https://www.buzzfeed.com/morgansloss1/financial-tips-from-graham-stephan"
+        url = "https://learning.flatironschool.com/courses/4212"
         unparsed_page = HTTParty.get(url)
+        
         parsed_page = Nokogiri::HTML(unparsed_page)
-        tips = Array.new
-        tip_list = parsed_page.css('span.js-subbuzz__title-text').text.split('.')[8,16]
+        links = Array.new
+        link_list = parsed_page.css( ).text.split('.')[8,16]
         
-        tips << tip_list
-        
-        return tips 
+        links << link_list
+        byebug
+        return links 
     end
 
 end

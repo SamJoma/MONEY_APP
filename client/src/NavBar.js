@@ -5,7 +5,7 @@ import {
   } from "react-router-dom";
 import { useHistory } from "react-router-dom"
 import MoneyApp from "./MoneyApp"
-
+import Navbar from 'react-bootstrap/Navbar'
 
 function NavBar({ handleSignoutClick, user, setUser }) {
   
@@ -26,7 +26,7 @@ function NavBar({ handleSignoutClick, user, setUser }) {
                   <Link to="/profile">Profile</Link>
                 </li>
                 <li>
-                  <Link to="/my-budget">My Budget</Link>
+                  <Link to="/mybudget">My Budget</Link>
                 </li>
                 <li>
                   <Link to="/expenses">Expenses</Link>

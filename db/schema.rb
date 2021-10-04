@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_29_025343) do
+ActiveRecord::Schema.define(version: 2021_10_03_231120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,11 +32,9 @@ ActiveRecord::Schema.define(version: 2021_09_29_025343) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.string "name"
-    t.float "amount"
     t.bigint "monthly_budget_id", null: false
     t.bigint "user_id", null: false
-    t.bigint "category_id"
+    t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_expenses_on_category_id"
@@ -47,7 +45,6 @@ ActiveRecord::Schema.define(version: 2021_09_29_025343) do
   create_table "monthly_budgets", force: :cascade do |t|
     t.string "name"
     t.integer "year"
-    t.float "monthly_budget_amount"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -63,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_025343) do
 
   add_foreign_key "category_budgets", "categories"
   add_foreign_key "category_budgets", "monthly_budgets"
+  add_foreign_key "expenses", "categories"
   add_foreign_key "expenses", "monthly_budgets"
   add_foreign_key "expenses", "users"
-  add_foreign_key "monthly_budgets", "users"
 end

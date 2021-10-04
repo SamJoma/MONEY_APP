@@ -7,14 +7,13 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar"
 import MoneyApp from "./MoneyApp"
 import UserProfile from './user/UserProfile'
-import MyBudgetContainer from './Budget/MyBudgetContainer'
-
-
+import MyBudgetContainer from './Budget/MyCategoryContainer'
+import Expense from './expense/ExpensePage'
+import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
 
 function App() {
  const [user, setUser] = useState()
- const [categories, setCategories] = useState([])
- 
+ const [categoryBudget, setCategoryBudget] = useState([])
   useEffect(() => {
     fetch("/me")
    .then(res => {
@@ -30,7 +29,7 @@ function App() {
   useEffect(() => {
     fetch('/categories')
     .then(res => res.json())
-    .then(setCategories) 
+    .then(setCategoryBudget) 
   }, [])
 
 
@@ -52,16 +51,19 @@ function App() {
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
           <Route path='/mymoneyapp'> 
-            <MoneyApp user={user} expenses={user.expenses}/>
+            <MoneyApp user={user} />
           </Route>
           <Route path='/login'> 
             <Login setUser={setUser} />
           </Route>
+          <Route path='/mybudget'>
+            <MonthlyBudgetContainer user ={user} categoryBudget={categoryBudget} setCategoryBudget={setCategoryBudget} />
+          </Route>
           
-          {/* <Route path='/mymoneyapp'>
-            <MyBudgetContainer user ={user} setUser={setUser}/>
-          </Route> */}
-          <Route path='/userprofile'>
+          <Route path='/expenses'>
+            <Expense user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} /> 
+          </Route>
+          <Route path='/profile'>
             <UserProfile user ={user} setUser={setUser}/>
           </Route>
           
