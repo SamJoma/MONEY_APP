@@ -9,11 +9,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 function MonthlyBudgetForm({user, categoryBudget, setCategoryBudget}) {
     const [monthlyBudget, setMonthlyBudget] = useState("")
     const [errors, setErrors] = useState([])
+  
     const history = useHistory()
 
     const newBudget = {
-      monthly_budget_id: categoryBudget.monthly_budget_id,
-      category_id: categoryBudget.category_id,
+      monthly_budget: categoryBudget.monthly_budget_id,
+      category: categoryBudget.category_id,
       amount: categoryBudget.amount
     }
 
@@ -39,7 +40,7 @@ function MonthlyBudgetForm({user, categoryBudget, setCategoryBudget}) {
              }
          });
        }
-
+     
 
     return (
         <div class="form-group" >

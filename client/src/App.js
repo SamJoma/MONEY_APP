@@ -8,7 +8,7 @@ import NavBar from "./NavBar"
 import MoneyApp from "./MoneyApp"
 import UserProfile from './user/UserProfile'
 import MyBudgetContainer from './Budget/MyCategoryContainer'
-import Expense from './expense/ExpensePage'
+import ExpensePage from './expense/ExpensePage'
 import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
     const month = date.getMonth()+1 
     fetch(`/monthly_budgets/${month}`)
    .then(res => {
-    //  console.log(res)
+     console.log(res)
      if (res.ok) {
        res.json().then(monthlyBudget => {
          setMonths(monthlyBudget)
@@ -70,7 +70,6 @@ function App() {
 
   return (
     <div>
-        <h1>Money App</h1>
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
           <Route path='/mymoneyapp'> 
@@ -84,8 +83,8 @@ function App() {
           </Route>
           
           <Route path='/expenses'>
-            <Expense user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget}  /> 
-            <Expense user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} category={category} setCategory={setCategory} /> 
+            <ExpensePage user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget}  /> 
+            
           </Route>
           <Route path='/profile'>
             <UserProfile user ={user} setUser={setUser}/>
