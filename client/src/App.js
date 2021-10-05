@@ -14,6 +14,9 @@ import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
 function App() {
  const [user, setUser] = useState()
  const [categoryBudget, setCategoryBudget] = useState([])
+ const [category, setCategory] = useState([])
+ const [months, setMonths] = useState([])
+
   useEffect(() => {
     fetch("/me")
    .then(res => {
@@ -27,7 +30,27 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const date = new Date()
+    const month = date.getMonth()+1 
+    fetch(`/monthly_budgets/${month}`)
+   .then(res => {
+    //  console.log(res)
+     if (res.ok) {
+       res.json().then(monthlyBudget => {
+         setMonths(monthlyBudget)
+        })
+     }
+   })
+  }, [user])
+
+  useEffect(() => {
     fetch('/categories')
+    .then(res => res.json())
+    .then(setCategory) 
+  }, [])
+
+  useEffect(() => {
+    fetch('/category_budgets')
     .then(res => res.json())
     .then(setCategoryBudget) 
   }, [])
@@ -61,7 +84,8 @@ function App() {
           </Route>
           
           <Route path='/expenses'>
-            <Expense user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} /> 
+            <Expense user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget}  /> 
+            <Expense user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} category={category} setCategory={setCategory} /> 
           </Route>
           <Route path='/profile'>
             <UserProfile user ={user} setUser={setUser}/>

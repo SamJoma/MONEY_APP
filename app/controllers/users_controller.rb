@@ -34,6 +34,7 @@ class UsersController < ApplicationController
         user = User.create(user_params) 
         session[:user_id]= user.id
         if user.valid?
+            user.addMonths
             render json: user, status: :created 
             else  
                 render json: {errors: user.errors.full_messages}, status: :unprocessable_entity

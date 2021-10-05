@@ -8,7 +8,7 @@ function Login({ setUser }) {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
-    <div> 
+    <div className="login"> 
         <h1>Login / Signup</h1>
         {showLogin ? 
         (

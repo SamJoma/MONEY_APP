@@ -41,10 +41,6 @@ function MonthlyBudgetForm({user, categoryBudget, setCategoryBudget}) {
        }
 
 
-    
-      
-    
-
     return (
         <div class="form-group" >
             <label for="sel1">Select Budget Categories</label>

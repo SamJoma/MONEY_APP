@@ -37,6 +37,7 @@ function LoginForm({setUser}) {
         });
     }
     return(
+        <div className="login-form-full"> 
         <form onSubmit={handleSubmit} autoComplete="off"> 
             <input 
             type="text"
@@ -56,7 +57,9 @@ function LoginForm({setUser}) {
             <br></br>
             <button type ="submit"> Submit </button>
         </form>
+        </div>
     )
+    
 
 }
 
