@@ -4,8 +4,7 @@ import {
     Link
   } from "react-router-dom";
 import { useHistory } from "react-router-dom"
-import MoneyApp from "./MoneyApp"
-
+import Nav from 'react-bootstrap/Nav'
 
 function NavBar({ handleSignoutClick, user, setUser }) {
   
@@ -15,58 +14,34 @@ function NavBar({ handleSignoutClick, user, setUser }) {
    
    
     return (
-     
-      <nav  class="navbar navbar-dark bg-dark">
-             <div class="container-fluid">
-               <div class="navbar-header"></div>
-            <nav>
-              <ul class="nav navbar-nav">
-                <li>
-                  <Link to="/mymoneyapp">Home</Link>
-                </li >
-                <li>
-                  <Link to="/profile">Profile</Link>
-                </li>
-                <li>
-                  <Link to="/mybudget">My Budget</Link>
-                </li>
-                <li>
-                  <Link to="/expenses">Expenses</Link>
-                </li>
-                <li class="btn btn-danger navbar-btn" onClick={handleSignoutClick}>Sign Out</li> 
-              </ul>
-            </nav>
-            </div>
-            </nav>
 
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
+        
+          <Link className="navbar-brand" to="/mymoneyapp">Money App</Link>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-8">
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="mybudget#">My Budget</Link> 
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to="expenses">Expenses</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to="profile">Profile</Link>
+              </li>
+              <li className="nav-item"></li>
+                <Link class="btn btn-danger navbar-btn" onClick={handleSignoutClick}>Sign Out</Link> 
+            </ul>
+          </div>
+        </div>
+      </nav>
+          
+ 
+    
+)
+  }
        
-            
-            )}
             export default NavBar;
 
-      {/* // <>
-      //   <nav class="navbar navbar-inverse">
-      //     <div class="container-fluid">
-      //       <div class="navbar-header">
-            
-      //         </div>
-      //       <ul class="nav navbar-nav">
-      //         <li class="active"><a href="/moneyapp">Home</a></li>
-      //         <li><a href="#">Link</a></li>
-      //         <li><a href="#">Link</a></li>
-      //       </ul>
-      //       <button class="btn btn-danger navbar-btn">Button</button>
-      //     </div>
-      //   </nav>
-
-      //   <div class="container">
-      //     <h2>Navbar Button</h2>
-      //     <p>Use the navbar-btn class on a button to vertically align (same padding as links) it inside the navbar.</p>
-      //   </div>
-      // </> */}
-        
-
-
-
-
-
+      

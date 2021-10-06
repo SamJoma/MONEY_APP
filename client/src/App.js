@@ -5,57 +5,71 @@ import { useHistory } from "react-router-dom"
 import Login from "./user/Login"
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar"
-import MoneyApp from "./MoneyApp"
+// import MoneyApp from "./MoneyApp"
 import UserProfile from './user/UserProfile'
 import MyBudgetContainer from './Budget/MyCategoryContainer'
-import ExpensePage from './expense/ExpensePage'
 import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
+import ExpensePage from "./expense/ExpensePage"
+import MyBudgetCardFront from './Budget/MyBudgetCardFront'
+
 
 function App() {
  const [user, setUser] = useState()
  const [categoryBudget, setCategoryBudget] = useState([])
  const [category, setCategory] = useState([])
  const [months, setMonths] = useState([])
+const [expenses, setExpenses] = useState([])
 
-  useEffect(() => {
-    fetch("/me")
-   .then(res => {
-    //  console.log(res)
-     if (res.ok) {
-       res.json().then(user => {
-         setUser(user)
-        })
-     }
-   })
-  }, [])
+
 
   useEffect(() => {
     const date = new Date()
     const month = date.getMonth()+1 
-    fetch(`/monthly_budgets/${month}`)
+    fetch(`/monthly_budgets/${month}` , {credentials: 'include'})
    .then(res => {
-     console.log(res)
+    //  console.log(res)
      if (res.ok) {
        res.json().then(monthlyBudget => {
          setMonths(monthlyBudget)
+        //  console.log(monthlyBudget)
         })
      }
    })
-  }, [user])
-
-  useEffect(() => {
-    fetch('/categories')
-    .then(res => res.json())
-    .then(setCategory) 
   }, [])
 
   useEffect(() => {
-    fetch('/category_budgets')
-    .then(res => res.json())
-    .then(setCategoryBudget) 
-  }, [])
+    fetch('/categories' , {credentials: 'include'})
+     .then(res => res.json())
+     .then(data => setCategory(data))
 
+      fetch('/category_budgets', {credentials: 'include'})
+       .then(res => res.json())
+       .then(data =>setCategoryBudget(data)) 
 
+      fetch('/monthly_budgets', {credentials: 'include'})
+       .then(res => res.json())
+       .then(data =>setCategoryBudget(data)) 
+        
+
+      fetch('/expenses', {credentials: 'include'})
+       .then(res => res.json())
+       .then(data =>setExpenses(data)) 
+       
+
+      fetch("/me")
+        .then(res => {
+      //  console.log(res)
+       if (res.ok) {
+        res.json().then(user => {
+          setUser(user)
+          })
+
+      }
+    })
+    }, [])
+  
+  console.log(expenses)
+  
   function handleSignoutClick(){
     fetch('/logout', {
       method: 'DELETE'
@@ -65,25 +79,25 @@ function App() {
       }
     })
   }
-  console.log(user)
+  // console.log(user)
   if(!user) return <Login setUser={setUser}/> 
 
   return (
     <div>
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
-          <Route path='/mymoneyapp'> 
-            <MoneyApp user={user} />
+           <Route path='/mymoneyapp'> 
+            <MyBudgetCardFront user={user} />
           </Route>
           <Route path='/login'> 
             <Login setUser={setUser} />
           </Route>
           <Route path='/mybudget'>
-            <MonthlyBudgetContainer user ={user} categoryBudget={categoryBudget} setCategoryBudget={setCategoryBudget} />
+            <MonthlyBudgetContainer user ={user} categoryBudget={categoryBudget} category={category} setCategoryBudget={setCategoryBudget} months={months} setMonths={setMonths} />
           </Route>
           
           <Route path='/expenses'>
-            <ExpensePage user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget}  /> 
+            <ExpensePage user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} setExpenses={setExpenses} expenses={expenses} /> 
             
           </Route>
           <Route path='/profile'>

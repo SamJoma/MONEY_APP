@@ -102,18 +102,27 @@ body {
   to {
     transform: rotate(360deg);
   }
-  @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
-
-  * {
-    box-sizing: border-box;
-  }
+}
   body {
-    background: #1C8EF9 !important;
+    background: #ffffff !important;
     min-height: 100vh;
     display: flex;
     font-weight: 400;
     font-family: 'Fira Sans', sans-serif;
   }
+
+  .card{
+    font-size:19px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 350px;
+}
+.card-item{
+  font-size:19px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 300px;
+}
   
   h1,h2,h3,h4,h5,h6,label,span {
     font-weight: 500;
@@ -162,8 +171,7 @@ body {
   .custom-control-label {
     font-weight: 400;
   }
-  
-
+  .navbar navbar-dark bg-dark
   .forgot-password,
   .forgot-password a {
     text-align: right;
@@ -177,4 +185,4 @@ body {
     color: #167bff;
   }
 
-}
+

@@ -16,6 +16,7 @@ function LoginForm({setUser}) {
         setIsLoading(true);
         fetch('/login', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },

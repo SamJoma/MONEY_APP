@@ -6,17 +6,17 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 
-function MonthlyBudgetForm({user, categoryBudget, setCategoryBudget}) {
+function MonthlyBudgetForm({user, month, setMonths, category}) {
     const [monthlyBudget, setMonthlyBudget] = useState("")
     const [errors, setErrors] = useState([])
-  
     const history = useHistory()
+  
 
-    const newBudget = {
-      monthly_budget: categoryBudget.monthly_budget_id,
-      category: categoryBudget.category_id,
-      amount: categoryBudget.amount
-    }
+    // const newBudget = {
+    //   monthly_budget: categoryBudget.monthly_budget_id,
+    //   category: categoryBudget.category_id,
+    //   amount: categoryBudget.amount
+    // }
 
     function handleMonthBudgetSubmit(e) {
         setErrors([])
@@ -26,7 +26,7 @@ function MonthlyBudgetForm({user, categoryBudget, setCategoryBudget}) {
              headers: {
                'Content-Type': 'application/json'
              },
-             body: JSON.stringify(newBudget)       
+             body: JSON.stringify()       
            })
            .then((r) => {
              if (r.ok) {
@@ -46,10 +46,10 @@ function MonthlyBudgetForm({user, categoryBudget, setCategoryBudget}) {
         <div class="form-group" >
             <label for="sel1">Select Budget Categories</label>
             <select class="form-control" id="sel1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+               {category.map(catObj => {
+                 return <option>{catObj.name}</option>
+               })}
+              
             </select>
             <input 
                 type="number"

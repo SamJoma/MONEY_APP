@@ -4,12 +4,8 @@ import Container from 'react-bootstrap/Container';
 
 
 function ExpensePage({user, categoryBudget, setCategoryBudget}){
-    const [expenses, setExpenses] = useState([])
-    const [toggleDetails, setToggleDetails] = useState(false)
-
-       
-    
-        
+   
+   
     return(
         
         <div class="container">
@@ -17,10 +13,12 @@ function ExpensePage({user, categoryBudget, setCategoryBudget}){
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th>User</th>
                     <th>Amount</th>
                     <th>Category</th>
                     <th>Month</th>
+                    <th>Date</th>
+                    <th>Description</th>
+
 
                 </tr>
                 </thead>

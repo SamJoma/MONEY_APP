@@ -1,7 +1,6 @@
 class MonthlyBudgetsController < ApplicationController
    
-    def show
-       
+    def show  
     monthKey = {
         1 => 'January',
         2 => 'February',
@@ -15,8 +14,10 @@ class MonthlyBudgetsController < ApplicationController
         10 => 'October',
         11 => 'November',
         12 => 'December'
+        
       }
-    mb = MonthlyBudget.find_by(user_id:session[:user_id], name:monthKey[params[:id]])
-    
+      puts session[:user_id]
+    mb = MonthlyBudget.find_by(user_id:session[:user_id], name:monthKey[params[:id].to_i])
+    render json: mb
     end
 end
