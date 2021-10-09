@@ -10,11 +10,7 @@ function NavBar({ handleSignoutClick, user, setUser }) {
   
     const history = useHistory()
 
-
-   
-   
     return (
-
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
         
@@ -31,7 +27,7 @@ function NavBar({ handleSignoutClick, user, setUser }) {
                 <Link className="nav-link active" to="profile">Profile</Link>
               </li>
               <li className="nav-item"></li>
-                <Link class="btn btn-danger navbar-btn" onClick={handleSignoutClick}>Sign Out</Link> 
+                <Link to="/login" class="btn btn-dark navbar-btn" onClick={handleSignoutClick}>Sign Out</Link> 
             </ul>
           </div>
         </div>

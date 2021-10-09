@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
 
 
-function ExpensePage({user, categoryBudget, setCategoryBudget}){
-   
+function ExpensePage({user, expense, month, category}){
+ 
    
     return(
         
@@ -14,11 +14,15 @@ function ExpensePage({user, categoryBudget, setCategoryBudget}){
                 <thead class="thead-dark">
                 <tr>
                     <th>Amount</th>
+                        <td>{expense}</td>
                     <th>Category</th>
+                        <td></td>
                     <th>Month</th>
+                        <td></td>
                     <th>Date</th>
+                        <td></td>
                     <th>Description</th>
-
+                        <td></td>
 
                 </tr>
                 </thead>

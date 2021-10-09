@@ -11,13 +11,15 @@ import MyBudgetContainer from './Budget/MyCategoryContainer'
 import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
 import ExpensePage from "./expense/ExpensePage"
 import MyBudgetCardFront from './Budget/MyBudgetCardFront'
+import AddExpenseContainer from './expense/AddExpenseContainer';
+import MonthlyBudgetForm from './Budget/MonthlyBudgetForm';
 
 
 function App() {
  const [user, setUser] = useState()
  const [categoryBudget, setCategoryBudget] = useState([])
  const [category, setCategory] = useState([])
- const [months, setMonths] = useState([])
+ const [month, setMonth] = useState([])
 const [expenses, setExpenses] = useState([])
 
 
@@ -30,7 +32,7 @@ const [expenses, setExpenses] = useState([])
     //  console.log(res)
      if (res.ok) {
        res.json().then(monthlyBudget => {
-         setMonths(monthlyBudget)
+         setMonth(monthlyBudget)
         //  console.log(monthlyBudget)
         })
      }
@@ -68,7 +70,7 @@ const [expenses, setExpenses] = useState([])
     })
     }, [])
   
-  console.log(expenses)
+ 
   
   function handleSignoutClick(){
     fetch('/logout', {
@@ -86,14 +88,18 @@ const [expenses, setExpenses] = useState([])
     <div>
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
-           <Route path='/mymoneyapp'> 
-            <MyBudgetCardFront user={user} />
+           <Route path='/mybudget'> 
+            <MonthlyBudgetForm user={user}  month={month} category={category} />
           </Route>
+          <Route path='/expenses'> 
+            <AddExpenseContainer user={user} expenses={expenses} month={month} category={category} />
+          </Route>
+
           <Route path='/login'> 
             <Login setUser={setUser} />
           </Route>
-          <Route path='/mybudget'>
-            <MonthlyBudgetContainer user ={user} categoryBudget={categoryBudget} category={category} setCategoryBudget={setCategoryBudget} months={months} setMonths={setMonths} />
+          <Route path='/mymoneyapp'>
+            <MonthlyBudgetContainer user ={user} categoryBudget={categoryBudget} category={category} setCategoryBudget={setCategoryBudget} month={month} setMonth={setMonth} />
           </Route>
           
           <Route path='/expenses'>

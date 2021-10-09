@@ -8,15 +8,18 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 
 function MonthlyBudgetForm({user, month, setMonths, category}) {
     const [monthlyBudget, setMonthlyBudget] = useState("")
+    const [selectCategory, setSelectCategory] = useState("")
+    const [amount, setAmount] = useState(0)
+
     const [errors, setErrors] = useState([])
     const history = useHistory()
   
 
-    // const newBudget = {
-    //   monthly_budget: categoryBudget.monthly_budget_id,
-    //   category: categoryBudget.category_id,
-    //   amount: categoryBudget.amount
-    // }
+    const newBudget = {
+      monthly_budget_id: month.id,
+      category_id: selectCategory,
+      amount: amount
+    }
 
     function handleMonthBudgetSubmit(e) {
         setErrors([])
@@ -26,7 +29,7 @@ function MonthlyBudgetForm({user, month, setMonths, category}) {
              headers: {
                'Content-Type': 'application/json'
              },
-             body: JSON.stringify()       
+             body: JSON.stringify(newBudget)       
            })
            .then((r) => {
              if (r.ok) {
@@ -43,23 +46,26 @@ function MonthlyBudgetForm({user, month, setMonths, category}) {
      
 
     return (
-        <div class="form-group" >
+        <form onSubmit={handleMonthBudgetSubmit} class="form-group" >
             <label for="sel1">Select Budget Categories</label>
-            <select class="form-control" id="sel1">
+            <select onChange={(e) => setSelectCategory(e.target.value)} value ={selectCategory} class="form-control" id="sel1">
+              <option value="0">select category</option>
                {category.map(catObj => {
-                 return <option>{catObj.name}</option>
+                 return <option value={catObj.id}>{catObj.name}</option>
                })}
               
             </select>
             <input 
+                value={amount}
                 type="number"
                 placeholder="enter amount..."
                 id ="amount"
+                onChange={(e) => setAmount(e.target.value)}
             />
-            <button onSubmit={handleMonthBudgetSubmit}>Submit</button>
-        </div>
+            <button>Submit</button>
+        </form>
     )
-}
+} 
 
         // <div> 
         // <h1>{user.username}: Set a monthly budget!</h1>
