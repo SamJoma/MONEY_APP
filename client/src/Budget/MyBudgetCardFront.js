@@ -26,46 +26,52 @@
 //         </div>
 //     )
 // }
- 
-
-
-
 
 import React from 'react';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import ProgressBarChart from './ProgressBarChart.js'
 import "../Box.css";
 import { Card } from "react-bootstrap";
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/TextField';
+import makeStyles from '@material-ui/styles/makeStyles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { grey } from '@material-ui/core/colors';
 
- function MyBudgetCardFront({catObj}) {
-  
+ function MyBudgetCardFront({catObj, handleDelete}) {
 
-  function handleDelete(){
+  // function handleDelete(){
 
-  }
+  // }
    
     
     // const catgoryCards = category.map(catObj => {
     //       return key={catObj.id} categoryName={catObj.name} 
     //    })
 
-       const now = catObj.amount
+      //  const now = catObj.amount
   return (
-      <div> 
-          
+   
+      <div class="card-group"> 
     <Card  className="box">
   
-    <Card.Body>
-    <ProgressBarChart  now={now} label={`${now}%`} />
+    <Card.Body >
+    {/* <ProgressBarChart  now={now} label={`${now}%`} /> */}
       <Card.Title>{catObj.category.name}</Card.Title>
       <Card.Text>${catObj.amount}</Card.Text>
-    </Card.Body>
+    </Card.Body >
   </Card>
+  {/* <IconButton onClick={handleDelete}  size="large">
+                    <DeleteIcon fontSize="small" style={{ color: grey[50] }} />
+                </IconButton> */}
+                <button onClick={handleDelete}>delete</button>
   </div>
 )
 };
+export default MyBudgetCardFront;
 
-// return <div className="grid">{cardInfo.map(renderCard)}</div>;
+{/* // return <div className="grid">{cardInfo.map(renderCard)}</div>;
 
 
     //   <>
@@ -93,4 +99,4 @@ import { Card } from "react-bootstrap";
     // </>
   //);
 //}
- export default MyBudgetCardFront;
+  */}

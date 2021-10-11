@@ -23,7 +23,6 @@ function App() {
 const [expenses, setExpenses] = useState([])
 
 
-
   useEffect(() => {
     const date = new Date()
     const month = date.getMonth()+1 
@@ -44,19 +43,23 @@ const [expenses, setExpenses] = useState([])
      .then(res => res.json())
      .then(data => setCategory(data))
 
+
       fetch('/category_budgets', {credentials: 'include'})
        .then(res => res.json())
        .then(data =>setCategoryBudget(data)) 
 
+      
       fetch('/monthly_budgets', {credentials: 'include'})
        .then(res => res.json())
        .then(data =>setCategoryBudget(data)) 
         
 
+
       fetch('/expenses', {credentials: 'include'})
        .then(res => res.json())
        .then(data =>setExpenses(data)) 
        
+
 
       fetch("/me")
         .then(res => {
@@ -103,7 +106,7 @@ const [expenses, setExpenses] = useState([])
           </Route>
           
           <Route path='/expenses'>
-            <ExpensePage user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} setExpenses={setExpenses} expenses={expenses} /> 
+            <ExpensePage user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} category={category} setExpenses={setExpenses} expenses={expenses} /> 
             
           </Route>
           <Route path='/profile'>
