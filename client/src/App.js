@@ -73,8 +73,7 @@ const [expenses, setExpenses] = useState([])
     })
     }, [])
   
- 
-  
+
   function handleSignoutClick(){
     fetch('/logout', {
       method: 'DELETE'
@@ -102,7 +101,7 @@ const [expenses, setExpenses] = useState([])
             <Login setUser={setUser} />
           </Route>
           <Route path='/mymoneyapp'>
-            <MonthlyBudgetContainer user ={user} categoryBudget={categoryBudget} category={category} setCategoryBudget={setCategoryBudget} month={month} setMonth={setMonth} />
+            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} category={category} setCategoryBudget={setCategoryBudget} month={month} setMonth={setMonth} />
           </Route>
           
           <Route path='/expenses'>

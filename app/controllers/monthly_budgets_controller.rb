@@ -1,5 +1,9 @@
 class MonthlyBudgetsController < ApplicationController
-   
+
+  def index 
+    render json: MonthlyBudget.all
+  end
+
   def update
     budget = MonthlyBudget.find_by(id: params[:id])
     if budget

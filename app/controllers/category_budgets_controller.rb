@@ -1,4 +1,5 @@
 class CategoryBudgetsController < ApplicationController
+    
     def create 
         monthly_budget = CategoryBudget.create(budget_params)
         if monthly_budget.valid?
@@ -7,6 +8,12 @@ class CategoryBudgetsController < ApplicationController
             render json: :render_unprocessable_entity_response
         end
         
+    end
+
+    def destroy
+        category_budget = CategoryBudget.find_by(id:params[:id])
+        category_budget.destroy 
+        head :no_content
     end
 
     def index 

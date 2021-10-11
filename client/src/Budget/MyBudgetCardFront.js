@@ -60,12 +60,13 @@ import { grey } from '@material-ui/core/colors';
     {/* <ProgressBarChart  now={now} label={`${now}%`} /> */}
       <Card.Title>{catObj.category.name}</Card.Title>
       <Card.Text>${catObj.amount}</Card.Text>
+      <button onClick={handleDelete}>delete</button>
     </Card.Body >
   </Card>
   {/* <IconButton onClick={handleDelete}  size="large">
                     <DeleteIcon fontSize="small" style={{ color: grey[50] }} />
                 </IconButton> */}
-                <button onClick={handleDelete}>delete</button>
+                
   </div>
 )
 };

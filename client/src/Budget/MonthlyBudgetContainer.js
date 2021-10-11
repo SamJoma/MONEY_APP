@@ -2,29 +2,33 @@ import React, { useState } from 'react'
 import MonthlyBudgetForm from './MonthlyBudgetForm';
 import {useHistory} from 'react-router-dom'
 import MyBudgetCardFront from './MyBudgetCardFront'
-import { Container, Row, Col } from "react-bootstrap";
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/TextField';
-import makeStyles from '@material-ui/styles/makeStyles';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { grey } from '@material-ui/core/colors';
+import { Container,Form, Button, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
-const useStyles = makeStyles({
-  text: {
-      color:'white'
-  },
-  icons : {
-      marginRight: '5px',
-      marginLeft: '5px',
-      width: '30px'
-  }
-})
 
-function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget, setCategoryBudget}) {
 
+function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget, useHistory, setCategoryBudget}) {
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [addExpense, setAddExpense] = useState("");
+  const [selectCategory, setSelectCategory] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("")
+  const [errors, setErrors] = useState([])
+
+  
   const { id } = month
+  const history =useHistory()
+  
 
+  const newExpense = {
+    category_id: selectCategory,
+     date: date,
+     description: description,
+     amount: amount
+  }
 
   function handleDelete(){
     fetch(`/category_budget/${id}`, {
@@ -33,61 +37,70 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
     })
     .then(res => res.json())
        .then(data =>setMonth(data)) 
+       history.push('/mymoneyapp')
   }
 
-  // function handleDelete(){
-  //   console.log("Deleted")
-  //   fetch(`/workout_logs/${id}`, {
-  //       method: 'DELETE',
-  //       headers: { Accept: 'application/json' }
-  //   })
-  //   .then(deleteWorkoutLogItem(id))
-  //   setTotal((total) => (total > 0) ? total - 1 : 0)
+ 
+  function handleSubmitExpense(e) {
+    setErrors([])
+     e.preventDefault()
+      fetch('/expenses', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(newExpense)       
+       })
+       .then((r) => {
+         if (r.ok) {
+           r.json().then((expense) => {
+            setAddExpense(expense) 
+             
+           });
+           history.push('/mymoneyapp');
+         } else {
+           r.json().then((err) => setErrors(err.errors));
+         }
+     });
+   }
 
-    
 
   const categories = month?.category_budgets?.map(catObj => {
     // console.log(catObj);
     return <MyBudgetCardFront key={catObj.id} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
   })
   
-  
-
     return (
+      <>
+    <Form onSubmit ={handleSubmitExpense} class="form-group">
     
-           <div> 
-       
-      
-      <Stack
-      component="form"
-      sx={{
-        width: '25ch',
-      }}
-      spacing={2}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        hiddenLabel
-        id="filled-hidden-label-small"
-        defaultValue="Small"
-        variant="filled"
-        size="small"
-      />
-      <TextField
-        hiddenLabel
-        id="filled-hidden-label-normal"
-        defaultValue="Normal"
-        variant="filled"
-        
-      />
-    </Stack>
-    {categories}
-    </div>
-   
-    
-        
-    )
-}
+      <select onChange={(e) => setSelectCategory(e.target.value)}  value ={selectCategory}>
+      <option value="0">select category</option>
+  {category.map(catObj => {
+    return <option value={catObj.id}>{catObj.name}</option>
+  })}
+  </select> 
 
+   
+      <input onChange={(e) => setDescription(e.target.value)} value ={description} class="inline" placeholder="description" />
+   
+      <input type="number" className="inline" onChange={(e) => setAmount(e.target.value)} value ={amount}  placeholder="amount" />
+    
+    </Form>
+      <DatePicker selected={selectedDate}
+       onChange={date => setSelectedDate(date)}
+       dateFormat='dd/MM/yyyy'
+      //  minDate={new Date()}
+      // filteredDate = {date => date.getDay()-7 &&date.getDay()+0}
+       placeholderText="Select a date"
+       isClearable
+       showYearDropdown
+       scrollableMonthYearDropdown
+       />
+       <button class="btn btn-dark navbar-btn" >add Expense</button>
+       <Container class="grid">{categories}</Container>
+      
+    </>
+    ) 
+}
 export default MonthlyBudgetContainer;
