@@ -6,11 +6,10 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 
-function MonthlyBudgetForm({user, month, setMonths, category}) {
-    const [monthlyBudget, setMonthlyBudget] = useState("")
+function MonthlyBudgetForm({user, month, setMonth, category}) {
+
     const [selectCategory, setSelectCategory] = useState("")
     const [amount, setAmount] = useState(0)
-
     const [errors, setErrors] = useState([])
     const history = useHistory()
   
@@ -34,10 +33,10 @@ function MonthlyBudgetForm({user, month, setMonths, category}) {
            .then((r) => {
              if (r.ok) {
                r.json().then((budget) => {
-                 setMonthlyBudget(budget) 
+                setMonth({...month,category_budgets:[...month.category_budgets,budget]})
                  
                });
-               history.push('/mybudget');
+               history.push('/mymoneyapp');
              } else {
                r.json().then((err) => setErrors(err.errors));
              }

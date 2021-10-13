@@ -7,7 +7,6 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar"
 // import MoneyApp from "./MoneyApp"
 import UserProfile from './user/UserProfile'
-import MyBudgetContainer from './Budget/MyCategoryContainer'
 import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
 import ExpensePage from "./expense/ExpensePage"
 import MyBudgetCardFront from './Budget/MyBudgetCardFront'
@@ -91,7 +90,7 @@ const [expenses, setExpenses] = useState([])
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
            <Route path='/mybudget'> 
-            <MonthlyBudgetForm user={user}  month={month} category={category} />
+            <MonthlyBudgetForm user={user}  month={month} setMonth={setMonth} category={category} />
           </Route>
           <Route path='/expenses'> 
             <AddExpenseContainer user={user} expenses={expenses} month={month} category={category} />

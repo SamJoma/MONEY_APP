@@ -30,13 +30,14 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
      amount: amount
   }
 
-  function handleDelete(){
-    fetch(`/category_budget/${id}`, {
+  function handleDelete(id){
+   
+    fetch(`/category_budgets/${id}`, {
       method:"DELETE",
       headers: {Accept: 'application/json'}
     })
     .then(res => res.json())
-       .then(data =>setMonth(data)) 
+       .then(data =>setMonth({...month, category_budgets: month.category_budgets.filter(cat => cat.id!=id)})) 
        history.push('/mymoneyapp')
   }
 
@@ -55,7 +56,7 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
          if (r.ok) {
            r.json().then((expense) => {
             setAddExpense(expense) 
-             
+             console.log(expense)
            });
            history.push('/mymoneyapp');
          } else {
@@ -80,13 +81,10 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
     return <option value={catObj.id}>{catObj.name}</option>
   })}
   </select> 
-
-   
       <input onChange={(e) => setDescription(e.target.value)} value ={description} class="inline" placeholder="description" />
    
       <input type="number" className="inline" onChange={(e) => setAmount(e.target.value)} value ={amount}  placeholder="amount" />
     
-    </Form>
       <DatePicker selected={selectedDate}
        onChange={date => setSelectedDate(date)}
        dateFormat='dd/MM/yyyy'
@@ -99,7 +97,7 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
        />
        <button class="btn btn-dark navbar-btn" >add Expense</button>
        <Container class="grid">{categories}</Container>
-      
+      </Form>
     </>
     ) 
 }
