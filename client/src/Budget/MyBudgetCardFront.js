@@ -27,7 +27,7 @@
 //     )
 // }
 
-import React from 'react';
+import React,{useState} from 'react';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import ProgressBarChart from './ProgressBarChart.js'
 import "../Box.css";
@@ -39,38 +39,80 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { grey } from '@material-ui/core/colors';
 
- function MyBudgetCardFront({catObj, handleDelete}) {
+ function MyBudgetCardFront({catObj, month, setMonth, handleDelete}) {
+  const [allowEdit, setAllowEdit] = useState(false)
+  const [amount, setAmount] = useState(catObj.amount)
 
-  // function handleDelete(){
+  const {id} = catObj 
 
-  // }
-   
-    
-    // const catgoryCards = category.map(catObj => {
-    //       return key={catObj.id} categoryName={catObj.name} 
-    //    })
+  const editForm = (
+    <form onSubmit={handleEditAmount} >
+      <input
+      type="number"
+      id="edit-amount"
+      value={amount}
+      onChange={(e) => setAmount( e.target.value)}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  )
 
-      //  const now = catObj.amount
+
+  function handleEditAmount(e){
+    e.preventDefault()
+    console.log("edited!")
+    fetch(`/category_budgets/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(
+            { 
+             amount: amount
+            })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        setAllowEdit(!allowEdit)
+        setMonth({...month, 
+        category_budgets: month.category_budgets.map(cb => {
+          return cb.id==data.id? data : cb 
+        })
+        })
+    })
+  }
+
   return (
    
-      <div class="card-group"> 
+  <div class="flex"> 
     <Card  className="box">
-  
     <Card.Body >
     {/* <ProgressBarChart  now={now} label={`${now}%`} /> */}
       <Card.Title>{catObj.category.name}</Card.Title>
       <Card.Text>${catObj.amount}</Card.Text>
       <button onClick={()=>handleDelete(catObj.id)}>delete</button>
+      <button onClick={()=>setAllowEdit(!allowEdit)}> edit </button>
+      {allowEdit && editForm}
     </Card.Body >
   </Card>
-  {/* <IconButton onClick={handleDelete}  size="large">
-                    <DeleteIcon fontSize="small" style={{ color: grey[50] }} />
-                </IconButton> */}
-                
+              
   </div>
 )
 };
 export default MyBudgetCardFront;
+
+
+
+
+
+
+
+
+
+
+
+
 
 {/* // return <div className="grid">{cardInfo.map(renderCard)}</div>;
 

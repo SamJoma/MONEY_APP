@@ -19,13 +19,14 @@ function App() {
  const [categoryBudget, setCategoryBudget] = useState([])
  const [category, setCategory] = useState([])
  const [month, setMonth] = useState([])
-const [expenses, setExpenses] = useState([])
+ const [amount, setAmount] = useState(0);
+ const [expenses, setExpenses] = useState([])
 
 
   useEffect(() => {
     const date = new Date()
     const month = date.getMonth()+1 
-    fetch(`/monthly_budgets/${month}` , {credentials: 'include'})
+    fetch(`/monthly_budgets/${month}`, {credentials: 'include'})
    .then(res => {
     //  console.log(res)
      if (res.ok) {
@@ -90,7 +91,7 @@ const [expenses, setExpenses] = useState([])
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
            <Route path='/mybudget'> 
-            <MonthlyBudgetForm user={user}  month={month} setMonth={setMonth} category={category} />
+            <MonthlyBudgetForm user={user} amount={amount} setAmount={setAmount} month={month} setMonth={setMonth} category={category} />
           </Route>
           <Route path='/expenses'> 
             <AddExpenseContainer user={user} expenses={expenses} month={month} category={category} />
@@ -100,7 +101,7 @@ const [expenses, setExpenses] = useState([])
             <Login setUser={setUser} />
           </Route>
           <Route path='/mymoneyapp'>
-            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} category={category} setCategoryBudget={setCategoryBudget} month={month} setMonth={setMonth} />
+            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} amount ={amount} setAmount={setAmount} category={category} setCategoryBudget={setCategoryBudget} month={month} setMonth={setMonth} />
           </Route>
           
           <Route path='/expenses'>

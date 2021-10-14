@@ -8,19 +8,18 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 
 
-function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget, useHistory, setCategoryBudget}) {
+function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, category,  categoryBudget, useHistory, setCategoryBudget}) {
+
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [addExpense, setAddExpense] = useState("");
   const [selectCategory, setSelectCategory] = useState("");
-  const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("")
   const [errors, setErrors] = useState([])
-
-  
-  const { id } = month
   const history =useHistory()
+  const { id } = month
+  
   
 
   const newExpense = {
@@ -36,8 +35,7 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
       method:"DELETE",
       headers: {Accept: 'application/json'}
     })
-    .then(res => res.json())
-       .then(data =>setMonth({...month, category_budgets: month.category_budgets.filter(cat => cat.id!=id)})) 
+       .then(() =>setMonth({...month, category_budgets: month.category_budgets.filter(cat => cat.id!=id)})) 
        history.push('/mymoneyapp')
   }
 
@@ -55,7 +53,7 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
        .then((r) => {
          if (r.ok) {
            r.json().then((expense) => {
-            setAddExpense(expense) 
+            setAddExpense(...amount, expense) 
              console.log(expense)
            });
            history.push('/mymoneyapp');
@@ -68,11 +66,11 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
 
   const categories = month?.category_budgets?.map(catObj => {
     // console.log(catObj);
-    return <MyBudgetCardFront key={catObj.id} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
+    return <MyBudgetCardFront key={catObj.id} month={month} setMonth={setMonth} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
   })
   
     return (
-      <>
+      <div>
     <Form onSubmit ={handleSubmitExpense} class="form-group">
     
       <select onChange={(e) => setSelectCategory(e.target.value)}  value ={selectCategory}>
@@ -96,9 +94,9 @@ function MonthlyBudgetContainer({user,month, setMonth, category,  categoryBudget
        scrollableMonthYearDropdown
        />
        <button class="btn btn-dark navbar-btn" >add Expense</button>
-       <Container class="grid">{categories}</Container>
       </Form>
-    </>
+      <Container class="grid">{categories}</Container>
+    </div>
     ) 
 }
 export default MonthlyBudgetContainer;

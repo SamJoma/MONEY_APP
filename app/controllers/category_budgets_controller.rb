@@ -16,6 +16,12 @@ class CategoryBudgetsController < ApplicationController
         head :no_content
     end
 
+    def update
+        category_budget = CategoryBudget.find_by(id:params[:id])
+        category_budget.update(updateAmountParam)
+        render json: category_budget, status: :accepted
+    end
+
     def index 
         category_budgets = CategoryBudget.all 
         render json: category_budgets
@@ -26,6 +32,10 @@ class CategoryBudgetsController < ApplicationController
 
     def budget_params
         params.permit(:monthly_budget_id, :category_id, :amount)
+    end
+
+    def updateAmountParam
+        params.permit(:amount)
     end
 
     def render_unprocessable_entity_response(exception)

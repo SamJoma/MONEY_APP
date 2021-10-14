@@ -6,10 +6,9 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 
-function MonthlyBudgetForm({user, month, setMonth, category}) {
+function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category}) {
 
     const [selectCategory, setSelectCategory] = useState("")
-    const [amount, setAmount] = useState(0)
     const [errors, setErrors] = useState([])
     const history = useHistory()
   

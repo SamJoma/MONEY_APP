@@ -51,9 +51,8 @@
     transform: rotate(359deg);
   }
 }
-
-.black-background {
-  background-color: red !important;
-  font-size: 5vh;
-  border-radius: 10px 10px 10px 10px;
+.flex {
+  display: grid;
+  grid-column-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(300, 1fr)150px);
 }
