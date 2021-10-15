@@ -12,7 +12,7 @@ import ExpensePage from "./expense/ExpensePage"
 import MyBudgetCardFront from './Budget/MyBudgetCardFront'
 import AddExpenseContainer from './expense/AddExpenseContainer';
 import MonthlyBudgetForm from './Budget/MonthlyBudgetForm';
-
+import Financial_tips from './Budget/Financial_tips'
 
 function App() {
  const [user, setUser] = useState()
@@ -21,7 +21,8 @@ function App() {
  const [month, setMonth] = useState([])
  const [amount, setAmount] = useState(0);
  const [expenses, setExpenses] = useState([])
-
+ const [finTips, setFinTips] = useState([])
+console.log(finTips)
 
   useEffect(() => {
     const date = new Date()
@@ -60,6 +61,10 @@ function App() {
        .then(data =>setExpenses(data)) 
        
 
+       fetch('/tips', {credentials: 'include'})
+       .then(res => res.json())
+       .then(data =>setFinTips(data)) 
+       
 
       fetch("/me")
         .then(res => {
@@ -96,7 +101,10 @@ function App() {
           <Route path='/expenses'> 
             <AddExpenseContainer user={user} expenses={expenses} month={month} category={category} />
           </Route>
-
+          <Route path='/finacialtips'> 
+            <Financial_tips user={user} setUser={setUser} finTips={finTips} setFinTips={setFinTips} />
+          </Route>
+          
           <Route path='/login'> 
             <Login setUser={setUser} />
           </Route>

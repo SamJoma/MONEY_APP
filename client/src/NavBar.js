@@ -26,6 +26,9 @@ function NavBar({ handleSignoutClick, user, setUser }) {
               <li className="nav-item">
                 <Link className="nav-link active" to="profile">Profile</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to="finacialtips">Tips</Link>
+                </li>
               <li className="nav-item"></li>
                 <Link to="/login" class="btn btn-dark navbar-btn" onClick={handleSignoutClick}>Sign Out</Link> 
             </ul>

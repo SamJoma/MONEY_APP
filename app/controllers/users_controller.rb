@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
-    
+    require 'nokogiri'
+    require 'httparty'
+    require 'byebug'
+
     skip_before_action :authorize, only: :create
 #'/me'
     def show 
@@ -42,30 +45,30 @@ class UsersController < ApplicationController
     end
 
 
-    def test
-        render json: scraper.to_json
-    end
+    # def tips
+    #     render json: scraper.to_json
+    # end
 
     private
+
+    # def scraper 
+    #     url = "https://www.buzzfeed.com/morgansloss1/financial-tips-from-graham-stephan"
+    #     unparsed_page = HTTParty.get(url)
+    #     parsed_page = Nokogiri::HTML(unparsed_page)
+    #     links = Array.new
+    #     link_list = parsed_page.css('span.js-subbuzz__title-text').text.split('.')[8,9]
+    #     links << link_list
+    #     return links   
+    # end
+    #     byebug
+    
+    #     scraper
 
     def user_params
         params.permit(:username, :password, :password_confirmation)
     end
 
    
-    def scraper 
-        url = "https://learning.flatironschool.com/courses/4212"
-        unparsed_page = HTTParty.get(url)
-        
-        parsed_page = Nokogiri::HTML(unparsed_page)
-        links = Array.new
-        link_list = parsed_page.css( ).text.split('.')[8,16]
-        
-        links << link_list
-        byebug
-        return links 
-    end
-
 end
 
     

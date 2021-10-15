@@ -43,3 +43,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "faker", "~> 2.19"
 gem "groupdate", "~> 5.2"
+gem 'httparty'
+gem 'nokogiri'
