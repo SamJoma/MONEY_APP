@@ -17,9 +17,14 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("")
   const [errors, setErrors] = useState([])
+  const [showExpForm, setShowExpForm] = useState(true)
+
   const history =useHistory()
   const { id } = month
   
+  // function toggleExpForm() {
+  //   setShowExpForm(!showExpForm)
+  // }
   
 
   const newExpense = {
@@ -68,21 +73,29 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
     // console.log(catObj);
     return <MyBudgetCardFront key={catObj.id} month={month} setMonth={setMonth} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
   })
-  
     return (
       <div>
+      <div className='form-group'>
+         <div>
+        <button onClick={()=> setShowExpForm(!showExpForm)}> Add Expense </button>  
+        </div>
+        {!showExpForm && 
     <Form onSubmit ={handleSubmitExpense} class="form-group">
-    
-      <select onChange={(e) => setSelectCategory(e.target.value)}  value ={selectCategory}>
+    <div className='form-group'>
+      <select class="card" onChange={(e) => setSelectCategory(e.target.value)}  value ={selectCategory}>
       <option value="0">select category</option>
-  {category.map(catObj => {
-    return <option value={catObj.id}>{catObj.name}</option>
-  })}
-  </select> 
-      <input onChange={(e) => setDescription(e.target.value)} value ={description} class="inline" placeholder="description" />
-   
-      <input type="number" className="inline" onChange={(e) => setAmount(e.target.value)} value ={amount}  placeholder="amount" />
-    
+        {category.map(catObj => {
+        return <option value={catObj.id}>{catObj.name}</option>
+         })}
+      </select> 
+      </div>
+      <div> 
+      <input onChange={(e) => setDescription(e.target.value)} value ={description} class="card" placeholder="description" />
+      </div> 
+      <div class='card'> 
+      <input type="number" className="card" onChange={(e) => setAmount(e.target.value)} value ={amount}  placeholder="amount" />
+      </div>
+      <div class="card"> 
       <DatePicker selected={selectedDate}
        onChange={date => setSelectedDate(date)}
        dateFormat='dd/MM/yyyy'
@@ -93,10 +106,14 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
        showYearDropdown
        scrollableMonthYearDropdown
        />
+       </div>  
        <button class="btn btn-dark navbar-btn" >add Expense</button>
-      </Form>
-      <Container class="grid">{categories}</Container>
+       
+       </Form>}
+       </div>
+      <Container class="container">{categories}</Container>
     </div>
+  
     ) 
 }
 export default MonthlyBudgetContainer;
