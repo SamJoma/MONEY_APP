@@ -115,11 +115,7 @@ body {
     color: white(2, 2, 21);
     background-color: rgb(22, 22, 26)
   }
-.form {
-    display:ruby-base-container;
-    flex-direction: column;
-    text-align: right;
-}
+
   
      .progress-bar {
       height: 20px; 

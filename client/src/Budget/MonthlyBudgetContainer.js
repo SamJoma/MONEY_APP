@@ -5,33 +5,29 @@ import MyBudgetCardFront from './MyBudgetCardFront'
 import { Container,Form, Button, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+ 
 
+function MonthlyBudgetContainer({user, month, setMonth, category, useHistory, expenses, setExpenses, setCategoryBudget}) {
 
-
-function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, category,  categoryBudget, useHistory, setCategoryBudget}) {
-
-
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [addExpense, setAddExpense] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const [selectCategory, setSelectCategory] = useState("");
-  const [date, setDate] = useState("");
   const [description, setDescription] = useState("")
   const [errors, setErrors] = useState([])
   const [showExpForm, setShowExpForm] = useState(true)
+  const [selectedMonth, setSelectedMonth] = useState(month.name)
+  const [selectedAmount, setSelectedAmount] = useState("")
+
 
   const history =useHistory()
   const { id } = month
   
-  // function toggleExpForm() {
-  //   setShowExpForm(!showExpForm)
-  // }
-  
-
   const newExpense = {
-    category_id: selectCategory,
-     date: date,
+    user_id: user.id,
+     category_id: selectCategory,
+     date: selectedDate,
      description: description,
-     amount: amount
+     amount: selectedAmount,
+     monthly_budget_id: selectedMonth
   }
 
   function handleDelete(id){
@@ -57,9 +53,9 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
        })
        .then((r) => {
          if (r.ok) {
-           r.json().then((expense) => {
-            setAddExpense(...amount, expense) 
-             console.log(expense)
+           r.json().then((data) => {
+            setExpenses([...expenses, data]) 
+              // console.log(expenses)
            });
            history.push('/mymoneyapp');
          } else {
@@ -67,14 +63,18 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
          }
      });
    }
-
-
+  
   const categories = month?.category_budgets?.map(catObj => {
     // console.log(catObj);
     return <MyBudgetCardFront key={catObj.id} month={month} setMonth={setMonth} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
   })
+  
+
+
+
     return (
       <div>
+     
       <div className='form-group'>
          <div>
         <button onClick={()=> setShowExpForm(!showExpForm)}> Add Expense </button>  
@@ -89,11 +89,17 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
          })}
       </select> 
       </div>
+      <div className='form-group'>
+      <select class="card" onChange={(e) => setSelectedMonth(e.target.value)}  value ={selectedMonth}>
+      <option value="0">select month</option>
+      <option value={month.id}>{month.name}</option>
+      </select> 
+      </div>
       <div> 
       <input onChange={(e) => setDescription(e.target.value)} value ={description} class="card" placeholder="description" />
       </div> 
       <div class='card'> 
-      <input type="number" className="card" onChange={(e) => setAmount(e.target.value)} value ={amount}  placeholder="amount" />
+      <input type="number" className="card" onChange={(e) => setSelectedAmount(e.target.value)} value ={selectedAmount}  placeholder="amount" />
       </div>
       <div class="card"> 
       <DatePicker selected={selectedDate}
@@ -108,12 +114,10 @@ function MonthlyBudgetContainer({user, amount, setAmount, month, setMonth, categ
        />
        </div>  
        <button class="btn btn-dark navbar-btn" >add Expense</button>
-       
        </Form>}
        </div>
       <Container class="container">{categories}</Container>
     </div>
-  
     ) 
 }
 export default MonthlyBudgetContainer;

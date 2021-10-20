@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom' 
 import './styles/style.min.css'
 
+
 ReactDOM.render(
  <BrowserRouter>
     <App />

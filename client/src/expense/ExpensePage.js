@@ -3,32 +3,31 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
 
 
-function ExpensePage({user, expense, month, category}){
- 
-   
+function ExpensePage({user, expense, expenseList, description, category, month, }){
+
+
     return(
+       
         
-        <div class="container">
-            <h2>Expenses</h2>
-            <table class="table">
-                <thead class="thead-dark">
+          
+        
                 <tr>
-                    <th>Amount</th>
-                        <td>{expense}</td>
-                    <th>Category</th>
-                        <td></td>
-                    <th>Month</th>
-                        <td></td>
-                    <th>Date</th>
-                        <td></td>
-                    <th>Description</th>
-                        <td></td>
+                    
+                        <td>{expense.amount}</td>
+                  
+                        <td>{expense.category.name}</td>
+              
+                        <td>{expense.monthly_budget.name}</td>
+                  
+                        <td>{expense.date}</td>
+                  
+                        <td>{expense.description}</td>
 
                 </tr>
-                </thead>
-            </table>
+             
+       
           
-        </div>
+ 
          
     )
 }

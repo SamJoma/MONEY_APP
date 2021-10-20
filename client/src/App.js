@@ -1,18 +1,15 @@
-
 import './App.css';
 import {useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom"
 import Login from "./user/Login"
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar"
-// import MoneyApp from "./MoneyApp"
 import UserProfile from './user/UserProfile'
 import MonthlyBudgetContainer from './Budget/MonthlyBudgetContainer'
-import ExpensePage from "./expense/ExpensePage"
 import MyBudgetCardFront from './Budget/MyBudgetCardFront'
-import AddExpenseContainer from './expense/AddExpenseContainer';
 import MonthlyBudgetForm from './Budget/MonthlyBudgetForm';
-import Financial_tips from './Budget/Financial_tips'
+import Financial_tips from './Financial_tips'
+import AddExpenseContainer from './expense/AddExpenseContainer'
 
 function App() {
  const [user, setUser] = useState()
@@ -22,7 +19,8 @@ function App() {
  const [amount, setAmount] = useState(0);
  const [expenses, setExpenses] = useState([])
  const [finTips, setFinTips] = useState([])
-console.log(finTips)
+// console.log(expenses)
+
 
   useEffect(() => {
     const date = new Date()
@@ -88,7 +86,9 @@ console.log(finTips)
       }
     })
   }
-  // console.log(user)
+
+ 
+
   if(!user) return <Login setUser={setUser}/> 
 
   return (
@@ -98,23 +98,17 @@ console.log(finTips)
            <Route path='/mybudget'> 
             <MonthlyBudgetForm user={user} amount={amount} setAmount={setAmount} month={month} setMonth={setMonth} category={category} />
           </Route>
-          <Route path='/expenses'> 
-            <AddExpenseContainer user={user} expenses={expenses} month={month} category={category} />
-          </Route>
           <Route path='/finacialtips'> 
             <Financial_tips user={user} setUser={setUser} finTips={finTips} setFinTips={setFinTips} />
           </Route>
-          
           <Route path='/login'> 
             <Login setUser={setUser} />
           </Route>
-          <Route path='/mymoneyapp'>
-            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} amount ={amount} setAmount={setAmount} category={category} setCategoryBudget={setCategoryBudget} month={month} setMonth={setMonth} />
+          <Route path='/expenses'> 
+            <AddExpenseContainer expenses={expenses} setExpenses={setExpenses} setUser={setUser} />
           </Route>
-          
-          <Route path='/expenses'>
-            <ExpensePage user ={user} categoryBudget={categoryBudget} setCategoryBudget={categoryBudget} category={category} setExpenses={setExpenses} expenses={expenses} /> 
-            
+          <Route path='/mymoneyapp'>
+            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} month={month} category={category} setExpenses={setExpenses} expenses={expenses}  />
           </Route>
           <Route path='/profile'>
             <UserProfile user ={user} setUser={setUser}/>

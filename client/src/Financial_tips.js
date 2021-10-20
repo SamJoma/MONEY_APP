@@ -11,7 +11,6 @@ import * as React from 'react';
 function Financial_tips({user,setUser, expenses, finTips, setFinTips}) {
    
     const [showDetail, setShowDetail] = useState(false)
-    const [detailBudget, setDetailBudget] = useState('')
 
   const tips = finTips?.map(tip => {
     return (

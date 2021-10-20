@@ -7,7 +7,6 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 
 
 function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category}) {
-
     const [selectCategory, setSelectCategory] = useState("")
     const [errors, setErrors] = useState([])
     const history = useHistory()
@@ -44,6 +43,12 @@ function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category})
      
 
     return (
+      <>
+      { errors ? errors.map(error =>{
+        return <p>{error}</p>
+      }) : null
+    }
+
         <form onSubmit={handleMonthBudgetSubmit} class="form-group" >
             <label for="sel1">Select Budget Categories</label>
             <select onChange={(e) => setSelectCategory(e.target.value)} value ={selectCategory} class="form-control" id="sel1">
@@ -62,10 +67,11 @@ function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category})
             />
             <button>Submit</button>
         </form>
+        </>
     )
 } 
 
-        // <div> 
+        {/* // <div> 
         // <h1>{user.username}: Set a monthly budget!</h1>
         // <br></br>
         // <h1>This Month's Budget</h1>
@@ -85,5 +91,5 @@ function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category})
         //     </div>
 
 //     )
-// }
+// } */}
 export default  MonthlyBudgetForm;

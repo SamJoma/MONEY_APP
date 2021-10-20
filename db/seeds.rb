@@ -1,7 +1,6 @@
 puts '🌱 Seeding data...'
 
 puts 'deleting old seeds'
-
 Expense.destroy_all
 CategoryBudget.destroy_all
 MonthlyBudget.destroy_all

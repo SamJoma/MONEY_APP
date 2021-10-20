@@ -1,7 +1,7 @@
 class CategoryBudgetsController < ApplicationController
     
     def create 
-        monthly_budget = CategoryBudget.create(budget_params)
+        monthly_budget = CategoryBudget.create!(budget_params)
         if monthly_budget.valid?
             render json: monthly_budget, status: :accepted
         else
@@ -38,7 +38,5 @@ class CategoryBudgetsController < ApplicationController
         params.permit(:amount)
     end
 
-    def render_unprocessable_entity_response(exception)
-        render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
-      end
+   
 end
