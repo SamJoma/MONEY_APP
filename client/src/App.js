@@ -11,16 +11,30 @@ import MonthlyBudgetForm from './Budget/MonthlyBudgetForm';
 import Financial_tips from './Financial_tips'
 import AddExpenseContainer from './expense/AddExpenseContainer'
 
+
+
 function App() {
  const [user, setUser] = useState()
  const [categoryBudget, setCategoryBudget] = useState([])
  const [category, setCategory] = useState([])
- const [month, setMonth] = useState([])
+ const [months, setMonths] = useState([])
  const [amount, setAmount] = useState(0);
  const [expenses, setExpenses] = useState([])
  const [finTips, setFinTips] = useState([])
-// console.log(expenses)
+ const history=useHistory()
 
+const {expId} = expenses
+
+
+function handleSignoutClick(){
+  fetch('/logout', {
+    method: 'DELETE'
+  }).then((r) => {
+    if(r.ok){
+      setUser(null)
+    }
+  })
+} 
 
   useEffect(() => {
     const date = new Date()
@@ -30,14 +44,13 @@ function App() {
     //  console.log(res)
      if (res.ok) {
        res.json().then(monthlyBudget => {
-         setMonth(monthlyBudget)
+         setMonths(monthlyBudget)
         //  console.log(monthlyBudget)
         })
      }
    })
-  }, [])
+  
 
-  useEffect(() => {
     fetch('/categories' , {credentials: 'include'})
      .then(res => res.json())
      .then(data => setCategory(data))
@@ -74,20 +87,29 @@ function App() {
 
       }
     })
-    }, [])
+  }, [])
+
+  // .then(() =>setMonths({...months, category_budgets: months.category_budgets.filter(cat => cat.id!=id)})) 
+  // history.push('/mymoneyapp')
   
+      function handleDeleteExpense(expId){
+        fetch(`/expenses/${expId}`, {
+          method:"DELETE",
+          headers: {Accept: 'application/json'}
+        })
+           .then(data =>  {
+            console.log(data)
+              setExpenses([...expenses, data].map(exp => (
+                 exp.id !== expId) )
+              
+              )
+           history.push('/expenses')
 
-  function handleSignoutClick(){
-    fetch('/logout', {
-      method: 'DELETE'
-    }).then((r) => {
-      if(r.ok){
-        setUser(null)
-      }
-    })
-  }
-
+           })
+        }
  
+      console.log(expenses)
+
 
   if(!user) return <Login setUser={setUser}/> 
 
@@ -96,7 +118,7 @@ function App() {
         <NavBar handleSignoutClick={handleSignoutClick}/>
         <Switch>
            <Route path='/mybudget'> 
-            <MonthlyBudgetForm user={user} amount={amount} setAmount={setAmount} month={month} setMonth={setMonth} category={category} />
+            <MonthlyBudgetForm user={user} amount={amount} setAmount={setAmount} months={months} setMonths={setMonths} category={category} />
           </Route>
           <Route path='/finacialtips'> 
             <Financial_tips user={user} setUser={setUser} finTips={finTips} setFinTips={setFinTips} />
@@ -105,10 +127,10 @@ function App() {
             <Login setUser={setUser} />
           </Route>
           <Route path='/expenses'> 
-            <AddExpenseContainer expenses={expenses} setExpenses={setExpenses} setUser={setUser} />
+            <AddExpenseContainer handleDeleteExpense={handleDeleteExpense} expenses={expenses} setExpenses={setExpenses} setUser={setUser} />
           </Route>
           <Route path='/mymoneyapp'>
-            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} month={month} category={category} setExpenses={setExpenses} expenses={expenses}  />
+            <MonthlyBudgetContainer useHistory={useHistory} user ={user} categoryBudget={categoryBudget} months={months} category={category} setExpenses={setExpenses} expenses={expenses} setMonths={setMonths} />
           </Route>
           <Route path='/profile'>
             <UserProfile user ={user} setUser={setUser}/>

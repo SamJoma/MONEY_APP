@@ -9,22 +9,22 @@ function SignUpForm({setUser}) {
     const [ username, setUserName ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ passwordConfirmation, setPasswordConfirmation ] = useState('')
+    const [email, setEmail] =useState()
     const [ avatarUrl, setAvatarUrl ] = useState('')
     const [ weeklyGoal, setWeeklyGoal ] = useState('')
     const [ errors, setErrors ] = useState([])
     const history = useHistory()
    
-    
-
-
+ 
     function handleSubmit(e) {
         e.preventDefault()
         const user = {
             username: username,
             password: password,
-           
-            
+            password_Confirmation: passwordConfirmation,
+            email: email        
     }
+
     fetch('/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -41,42 +41,6 @@ function SignUpForm({setUser}) {
             history.push('/mymoneyapp')
         }
     return (
-        // <>
-        //     <form onSubmit={hasndleSubmit}>
-        //         <label>
-        //             Username
-        //             <input type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
-        //         </label>
-        //         <label>
-        //             Password
-        //             <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-        //         </label>
-        //         <label>
-        //             Confirm Password
-        //             <input type='password' value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}/>
-        //         </label>
-                
-               
-                
-        //         <button type='submit' value='Get Started'>Submit </button>
-        //     </form>
-        //     {(errors.length > 0) ? 
-        //     (
-        //         <ul>
-        //             {errors.map(err => (
-        //                 <li key={err}>{err}</li>
-        //             ))
-        //             }
-        //         </ul>
-
-        //     )
-        //     :
-        //     null
-        //     }
-        // </>
-
-
-
         <>
             <Container>
                 <h1 className="shadow-sm  mt-5 p-3 text-center rounded">User Sign-Up</h1>
@@ -85,10 +49,18 @@ function SignUpForm({setUser}) {
                         <Form onSubmit={handleSubmit} >
                             <Form.Group className="formBasicEmail">
                                 <Form.Label></Form.Label>
-                                <Form.Control type="text" placeholder="Enter email"
+                                <Form.Control type="text" placeholder="Enter UserID"
                                 value={username}
                                 onChange={(e) => setUserName(e.target.value)}
                                  />
+                            </Form.Group>
+            
+                            <Form.Group className="formBasicEmail">
+                                <Form.Label></Form.Label>
+                                <Form.Control type="text" placeholder="Enter Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                />
                             </Form.Group>
 
                             <Form.Group contrclassNameolId="formBasicPassword">
@@ -122,3 +94,46 @@ function SignUpForm({setUser}) {
 
 
 export default SignUpForm;
+
+
+
+
+
+
+
+
+
+
+    // <>
+        //     <form onSubmit={hasndleSubmit}>
+        //         <label>
+        //             Username
+        //             <input type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
+        //         </label>
+        //         <label>
+        //             Password
+        //             <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+        //         </label>
+        //         <label>
+        //             Confirm Password
+        //             <input type='password' value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}/>
+        //         </label>
+                
+               
+                
+        //         <button type='submit' value='Get Started'>Submit </button>
+        //     </form>
+        //     {(errors.length > 0) ? 
+        //     (
+        //         <ul>
+        //             {errors.map(err => (
+        //                 <li key={err}>{err}</li>
+        //             ))
+        //             }
+        //         </ul>
+
+        //     )
+        //     :
+        //     null
+        //     }
+        // </>

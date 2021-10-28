@@ -2,27 +2,42 @@ import React, { useState } from 'react'
 import MonthlyBudgetForm from './MonthlyBudgetForm';
 import {useHistory} from 'react-router-dom'
 import MyBudgetCardFront from './MyBudgetCardFront'
-import { Container,Form, Button, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import { Container, Button, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
- 
+import styled from 'styled-components'
+import { Form } from 'styled-components'
 
-function MonthlyBudgetContainer({user, month, setMonth, category, useHistory, expenses, setExpenses, setCategoryBudget}) {
+
+function MonthlyBudgetContainer({user, months, setMonths, category, useHistory, expenses, setExpenses, setCategoryBudget}) {
 
   const [selectedDate, setSelectedDate] = useState("");
   const [selectCategory, setSelectCategory] = useState("");
   const [description, setDescription] = useState("")
   const [errors, setErrors] = useState([])
   const [showExpForm, setShowExpForm] = useState(true)
-  const [selectedMonth, setSelectedMonth] = useState(month.name)
+  const [selectedMonth, setSelectedMonth] = useState(months.name)
   const [selectedAmount, setSelectedAmount] = useState("")
-
-
   const history =useHistory()
-  const { id } = month
+  const { id } = months
   
+
+const Forms = styled.form`
+   width: 100%;
+`
+
+  const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid black ;
+  color: darkblue;
+  margin: 0 0em;
+  padding: 0.25em 1em;
+`
+
+
   const newExpense = {
-    user_id: user.id,
+     user_id: user.id,
      category_id: selectCategory,
      date: selectedDate,
      description: description,
@@ -30,16 +45,15 @@ function MonthlyBudgetContainer({user, month, setMonth, category, useHistory, ex
      monthly_budget_id: selectedMonth
   }
 
+
   function handleDelete(id){
-   
     fetch(`/category_budgets/${id}`, {
       method:"DELETE",
       headers: {Accept: 'application/json'}
     })
-       .then(() =>setMonth({...month, category_budgets: month.category_budgets.filter(cat => cat.id!=id)})) 
+       .then(() =>setMonths({...months, category_budgets: months.category_budgets.filter(cat => cat.id!=id)})) 
        history.push('/mymoneyapp')
   }
-
  
   function handleSubmitExpense(e) {
     setErrors([])
@@ -57,32 +71,34 @@ function MonthlyBudgetContainer({user, month, setMonth, category, useHistory, ex
             setExpenses([...expenses, data]) 
               // console.log(expenses)
            });
-           history.push('/mymoneyapp');
+           history.push('/expenses');
          } else {
            r.json().then((err) => setErrors(err.errors));
          }
      });
    }
   
-  const categories = month?.category_budgets?.map(catObj => {
+
+
+
+  const categories = months?.category_budgets?.map(catObj => {
     // console.log(catObj);
-    return <MyBudgetCardFront key={catObj.id} month={month} setMonth={setMonth} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
+    return <MyBudgetCardFront key={catObj.id} months={months} setMonths={setMonths} catObj={catObj} handleDelete={handleDelete} setCategoryBudget={setCategoryBudget} category={category} />
   })
   
-
-
+  // const displayExpense = expenses.
+  // console.log(expenses)
 
     return (
       <div>
-     
       <div className='form-group'>
          <div>
-        <button onClick={()=> setShowExpForm(!showExpForm)}> Add Expense </button>  
+        <Button onClick={()=> setShowExpForm(!showExpForm)}> Add Expense </Button>  
         </div>
         {!showExpForm && 
-    <Form onSubmit ={handleSubmitExpense} class="form-group">
+    <Forms onSubmit ={handleSubmitExpense} class="form-group">
     <div className='form-group'>
-      <select class="card" onChange={(e) => setSelectCategory(e.target.value)}  value ={selectCategory}>
+      <select class="card" onChange={(e) => setSelectCategory(e.target.value)}  value={selectCategory}>
       <option value="0">select category</option>
         {category.map(catObj => {
         return <option value={catObj.id}>{catObj.name}</option>
@@ -92,7 +108,7 @@ function MonthlyBudgetContainer({user, month, setMonth, category, useHistory, ex
       <div className='form-group'>
       <select class="card" onChange={(e) => setSelectedMonth(e.target.value)}  value ={selectedMonth}>
       <option value="0">select month</option>
-      <option value={month.id}>{month.name}</option>
+      <option value={months.id}>{months.name}</option>
       </select> 
       </div>
       <div> 
@@ -113,8 +129,8 @@ function MonthlyBudgetContainer({user, month, setMonth, category, useHistory, ex
        scrollableMonthYearDropdown
        />
        </div>  
-       <button class="btn btn-dark navbar-btn" >add Expense</button>
-       </Form>}
+       <Button class="btn btn-dark navbar-btn" >Submit</Button>
+       </Forms>}
        </div>
       <Container class="container">{categories}</Container>
     </div>

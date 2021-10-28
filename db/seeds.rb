@@ -9,7 +9,7 @@ User.destroy_all
 
 
 puts 'Creating users...'
-sam = User.create(username: 'Sam', password: 'password123')
+sam = User.create(username: 'Sam', email:"moneyapp.sam@gmail.com", password: 'password123', password_confirmation:'password123')
 puts 'Done seeding Users'
 
 

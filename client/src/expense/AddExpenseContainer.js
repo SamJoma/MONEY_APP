@@ -3,14 +3,14 @@ import ExpensePage from '../expense/ExpensePage'
 import 'bootstrap/dist/css/bootstrap.css';
 import Container from 'react-bootstrap/Container';
 
-function AddExpenseContainer({expenses}) {
+function AddExpenseContainer({expenses, handleDeleteExpense}) {
 
-// console.log(expenses)
 
-const expenseList = expenses?.map(expense => {
-    return  <ExpensePage key={expense.id} expense={expense} />
-  
+
+const expenseList = expenses.map(expense => {
+    return  <ExpensePage key={expense.id} expense={expense} handleDeleteExpense={handleDeleteExpense}/>
    });
+
     return (
         
         <div class="container">
@@ -26,16 +26,13 @@ const expenseList = expenses?.map(expense => {
                     <th>Date</th>
                       
                     <th>Description</th>
-                      
 
                 </tr>
                 </thead>
                 {expenseList}
             </table>
           
-        </div>
-           
-          
+        </div>  
      
     )
 }

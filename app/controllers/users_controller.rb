@@ -44,26 +44,8 @@ class UsersController < ApplicationController
         end
     end
 
-
-    # def tips
-    #     render json: scraper.to_json
-    # end
-
     private
-
-    # def scraper 
-    #     url = "https://www.buzzfeed.com/morgansloss1/financial-tips-from-graham-stephan"
-    #     unparsed_page = HTTParty.get(url)
-    #     parsed_page = Nokogiri::HTML(unparsed_page)
-    #     links = Array.new
-    #     link_list = parsed_page.css('span.js-subbuzz__title-text').text.split('.')[8,9]
-    #     links << link_list
-    #     return links   
-    # end
-    #     byebug
     
-    #     scraper
-
     def user_params
         params.permit(:username, :password, :password_confirmation)
     end

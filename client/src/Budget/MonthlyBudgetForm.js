@@ -6,14 +6,14 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 
-function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category}) {
+function MonthlyBudgetForm({user, amount, setAmount, months, setMonths, category}) {
     const [selectCategory, setSelectCategory] = useState("")
     const [errors, setErrors] = useState([])
     const history = useHistory()
   
 
     const newBudget = {
-      monthly_budget_id: month.id,
+      monthly_budget_id: months.id,
       category_id: selectCategory,
       amount: amount
     }
@@ -31,7 +31,7 @@ function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category})
            .then((r) => {
              if (r.ok) {
                r.json().then((budget) => {
-                setMonth({...month,category_budgets:[...month.category_budgets,budget]})
+                setMonths({...months,category_budgets:[...months.category_budgets,budget]})
                  
                });
                history.push('/mymoneyapp');
@@ -48,7 +48,6 @@ function MonthlyBudgetForm({user, amount, setAmount, month, setMonth, category})
         return <p>{error}</p>
       }) : null
     }
-
         <form onSubmit={handleMonthBudgetSubmit} class="form-group" >
             <label for="sel1">Select Budget Categories</label>
             <select onChange={(e) => setSelectCategory(e.target.value)} value ={selectCategory} class="form-control" id="sel1">

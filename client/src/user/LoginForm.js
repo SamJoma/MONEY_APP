@@ -39,32 +39,6 @@ function LoginForm({setUser}) {
         });
     }
     return(
-        // <div className="login-form-full"> 
-        // <form onSubmit={handleSubmit} autoComplete="off"> 
-        //     <input 
-        //     type="text"
-        //     id="username"
-        //     placeholder ="username.."
-        //     // variant="outlined"
-        //     value={username}
-        //     onChange={(e) => setUserName(e.target.value)}
-        //     />
-        //     <input 
-        //         type ="password"
-        //         id = "password"
-        //         placeholder = "password.."
-        //         value = {password}
-        //         onChange={(e) => setPassword(e.target.value)}
-        //     />
-        //     <br></br>
-        //     <button type ="submit"> Submit </button>
-        // </form>
-        // </div>
-
-        
-       
-
-   
         <>
             <Container>
                 <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">User Login</h1>
@@ -73,7 +47,7 @@ function LoginForm({setUser}) {
                         <Form onSubmit={handleSubmit} >
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>User Name</Form.Label>
-                                <Form.Control type="text" placeholder="Enter email"
+                                <Form.Control type="text" placeholder="Enter UserID"
                                 value={username}
                                 onChange={(e) => setUserName(e.target.value)}
                                  />
@@ -103,3 +77,34 @@ function LoginForm({setUser}) {
 
 
 export default LoginForm;
+
+
+
+
+
+
+
+
+
+
+  // <div className="login-form-full"> 
+        // <form onSubmit={handleSubmit} autoComplete="off"> 
+        //     <input 
+        //     type="text"
+        //     id="username"
+        //     placeholder ="username.."
+        //     // variant="outlined"
+        //     value={username}
+        //     onChange={(e) => setUserName(e.target.value)}
+        //     />
+        //     <input 
+        //         type ="password"
+        //         id = "password"
+        //         placeholder = "password.."
+        //         value = {password}
+        //         onChange={(e) => setPassword(e.target.value)}
+        //     />
+        //     <br></br>
+        //     <button type ="submit"> Submit </button>
+        // </form>
+        // </div>
