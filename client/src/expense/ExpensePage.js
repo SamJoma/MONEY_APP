@@ -8,7 +8,7 @@ function ExpensePage({user, handleDeleteExpense, expense, month }) {
 
     return(
         <tr>
-            <td>{expense.amount}</td>
+            <td>${expense.amount}</td>
             <td>{expense.category.name}</td>
             <td>{expense.monthly_budget.name}</td>
             <td>{expense.date}</td>
