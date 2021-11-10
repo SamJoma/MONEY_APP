@@ -13,7 +13,7 @@ function ExpensePage({user, handleDeleteExpense, expense, month }) {
             <td>{expense.monthly_budget.name}</td>
             <td>{expense.date}</td>
             <td>{expense.description}</td>
-            <td> <button onClick={() => handleDeleteExpense(expense)}>Delete </button> </td>
+            <td> <button  onClick={() => handleDeleteExpense(expense)}>Delete </button> </td>
         </tr>
     )
 }

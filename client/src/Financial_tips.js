@@ -31,7 +31,7 @@ function Financial_tips({user,setUser, expenses, finTips, setFinTips}) {
         </React.Fragment>
     )
   })
-
+console.log(finTips)
     const bull = (
         <Box
           component="span"

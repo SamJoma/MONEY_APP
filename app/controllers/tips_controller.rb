@@ -4,6 +4,7 @@ class TipsController < ApplicationController
         tips = scraper
         tips.map!{|tip| {value:tip}}
         render json: tips 
+        
     end
     private
 
@@ -11,10 +12,8 @@ class TipsController < ApplicationController
         url = "https://www.thebalance.com/top-ten-financial-tips-1289309"
         unparsed_page = HTTParty.get(url)
         parsed_page = Nokogiri::HTML(unparsed_page)
-        link_list = parsed_page.css('span.mntl-sc-block-heading__text').text.split(/\s\d./)[1...10]
-        link_list
-        return link_list 
-        
+        tip_list = parsed_page.css('span.mntl-sc-block-heading__text').text.split(/\s\d./)[1...10]
+        tip_list
+        return tip_list 
     end
-    
 end

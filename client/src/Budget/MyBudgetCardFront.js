@@ -14,6 +14,9 @@ import { grey } from '@material-ui/core/colors';
   const [allowEdit, setAllowEdit] = useState(false)
   const [amount, setAmount] = useState(catObj.amount)
 
+  console.log(months)
+
+
   const {id} = catObj 
 
   const editForm = (
@@ -52,23 +55,21 @@ import { grey } from '@material-ui/core/colors';
         })
     })
   }
-
-//   const result = catObj.total_spending- catObj.amount
-//   console.log(result)
-
-
-// const now = catObj.total_spent-catObj.amount
+  
 
   return (
-   
   <div class="flex"> 
     <Card  className="box">
     <Card.Body >
-    {/* <ProgressBarChart  now={now} label={`${now}%`} /> */}
       <Card.Title>{catObj.category.name}</Card.Title>
+      <br></br>
+      {/* <ProgressBarChart label={`${percentage}%`} /> */}
+      <br></br>
       <Card.Text>$Monthly budget: {catObj.amount}</Card.Text>
       <Card.Text>$Total Spent this month: {catObj.total_spending}</Card.Text>
-      <button onClick={()=>handleDelete(catObj.id)}>delete</button>
+      
+      <button type="button" class="btn btn-white w-auto me-1 mb-0" onClick={()=>handleDelete(catObj.id)}>Delete</button>
+
       <button onClick={()=>setAllowEdit(!allowEdit)}> edit </button>
       {allowEdit && editForm}
     </Card.Body >
